@@ -12,5 +12,5 @@ export default defineConfig({
   // rollup tree-shaking pass would strip it as an unrecognised module-level
   // directive.
   banner: { js: '"use client";' },
-  external: ['react', 'react-dom', 'msw', 'msw/browser', '@juddroid/msw-devtools-core'],
+  external: ['react', 'react-dom', 'msw', 'msw/browser', '@juddroid_raccoon/msw-devtools-core'],
 });

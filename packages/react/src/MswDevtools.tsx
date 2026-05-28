@@ -5,7 +5,7 @@ import {
   type MockKey,
   type MswDevtoolsInstance,
   type MswDevtoolsOptions,
-} from '@juddroid/msw-devtools-core';
+} from '@juddroid_raccoon/msw-devtools-core';
 import { MswDevtoolsContext } from './provider';
 
 export interface MswDevtoolsProps extends MswDevtoolsOptions {

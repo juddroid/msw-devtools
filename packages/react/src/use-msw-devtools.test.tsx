@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { MswDevtoolsContext } from './provider';
 import { useMswDevtools } from './use-msw-devtools';
-import type { MswDevtoolsInstance } from '@juddroid/msw-devtools-core';
+import type { MswDevtoolsInstance } from '@juddroid_raccoon/msw-devtools-core';
 
 function makeFakeInstance(): MswDevtoolsInstance {
   const listeners = new Set<(s: any) => void>();

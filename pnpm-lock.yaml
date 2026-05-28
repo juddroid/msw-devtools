@@ -26,7 +26,7 @@ importers:
 
   examples/nextjs-app:
     dependencies:
-      '@juddroid/msw-devtools-react':
+      '@juddroid_raccoon/msw-devtools-react':
         specifier: workspace:*
         version: link:../../packages/react
       msw:
@@ -57,7 +57,7 @@ importers:
 
   examples/vanilla:
     dependencies:
-      '@juddroid/msw-devtools-core':
+      '@juddroid_raccoon/msw-devtools-core':
         specifier: workspace:*
         version: link:../../packages/core
       msw:
@@ -73,7 +73,7 @@ importers:
 
   examples/vite-react:
     dependencies:
-      '@juddroid/msw-devtools-react':
+      '@juddroid_raccoon/msw-devtools-react':
         specifier: workspace:*
         version: link:../../packages/react
       '@tanstack/react-query':
@@ -137,7 +137,7 @@ importers:
 
   packages/react:
     dependencies:
-      '@juddroid/msw-devtools-core':
+      '@juddroid_raccoon/msw-devtools-core':
         specifier: workspace:*
         version: link:../core
     devDependencies:

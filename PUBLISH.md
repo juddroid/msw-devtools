@@ -25,7 +25,7 @@ git remote add origin git@github.com:juddroid/msw-devtools.git
 git push -u origin main
 ```
 
-## 2. Create the `@juddroid` npm scope
+## 2. Create the `@juddroid_raccoon` npm scope
 
 ```bash
 npm login   # 2FA required
@@ -38,7 +38,7 @@ The scope is auto-created on first publish.
 1. Go to https://www.npmjs.com/settings/<your-username>/tokens/granular-access-tokens/new
 2. Token name: `msw-devtools-ci`
 3. Expiration: 365 days
-4. Allowed scopes: `@juddroid/*`
+4. Allowed scopes: `@juddroid_raccoon/*`
 5. Allowed permissions: `Read and write`
 6. Copy the token.
 
@@ -61,8 +61,8 @@ After the first push to `main`, the release workflow opens a "Version Packages" 
 The workflow then publishes both packages to npm. Verify:
 
 ```bash
-npm view @juddroid/msw-devtools-core
-npm view @juddroid/msw-devtools-react
+npm view @juddroid_raccoon/msw-devtools-core
+npm view @juddroid_raccoon/msw-devtools-react
 ```
 
 Both should show v0.1.0 (or v1.0.0 — see version note above).

@@ -1,5 +1,5 @@
 'use client';
-import { MswDevtools } from '@juddroid/msw-devtools-react';
+import { MswDevtools } from '@juddroid_raccoon/msw-devtools-react';
 import type { ReactNode } from 'react';
 import { handlers } from '../mocks/handlers';
 

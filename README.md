@@ -14,17 +14,17 @@ Visual devtools for toggling [MSW](https://mswjs.io) handlers at runtime.
 
 ```bash
 # React
-pnpm add -D @juddroid/msw-devtools-react msw
+pnpm add -D @juddroid_raccoon/msw-devtools-react msw
 
 # Vanilla / any framework
-pnpm add -D @juddroid/msw-devtools-core msw
+pnpm add -D @juddroid_raccoon/msw-devtools-core msw
 ```
 
 ## Quick start (React)
 
 ```tsx
 'use client';
-import { MswDevtools } from '@juddroid/msw-devtools-react';
+import { MswDevtools } from '@juddroid_raccoon/msw-devtools-react';
 import { handlers } from './mocks/handlers';
 
 export function Providers({ children }) {
@@ -48,7 +48,7 @@ pnpm dlx msw init public/ --save
 ## Quick start (vanilla)
 
 ```ts
-import { createMswDevtools } from '@juddroid/msw-devtools-core';
+import { createMswDevtools } from '@juddroid_raccoon/msw-devtools-core';
 import { handlers } from './handlers';
 
 const devtools = createMswDevtools({ handlers });
@@ -61,7 +61,7 @@ devtools.mount();
 
 ```tsx
 import { useEffect } from 'react';
-import { useMswDevtools } from '@juddroid/msw-devtools-react';
+import { useMswDevtools } from '@juddroid_raccoon/msw-devtools-react';
 import axios from 'axios';
 
 export function AxiosBridge() {

@@ -1,6 +1,6 @@
 'use client';
 import { useContext, useMemo, useSyncExternalStore } from 'react';
-import type { DevtoolsState, MockKey, MswDevtoolsInstance } from '@juddroid/msw-devtools-core';
+import type { DevtoolsState, MockKey, MswDevtoolsInstance } from '@juddroid_raccoon/msw-devtools-core';
 import { MswDevtoolsContext } from './provider';
 
 const FALLBACK_STATE: DevtoolsState = {

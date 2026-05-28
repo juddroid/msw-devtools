@@ -1,12 +1,12 @@
 name: Bug report
-description: Something is broken in @juddroid/msw-devtools-core or -react.
+description: Something is broken in @juddroid_raccoon/msw-devtools-core or -react.
 labels: [bug]
 body:
   - type: input
     id: version
     attributes:
       label: Package version(s)
-      placeholder: '@juddroid/msw-devtools-react@0.1.0'
+      placeholder: '@juddroid_raccoon/msw-devtools-react@0.1.0'
     validations: { required: true }
   - type: dropdown
     id: bundler
