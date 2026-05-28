@@ -1,4 +1,4 @@
-import { css, ROOT_ATTR, STYLE_TAG_ATTR } from './styles';
+import { ROOT_ATTR, STYLE_TAG_ATTR, css } from './styles';
 
 export type Position = 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
 export type Theme = 'light' | 'dark' | 'auto';

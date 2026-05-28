@@ -1,15 +1,19 @@
+import type { MswDevtoolsInstance } from '@juddroid_raccoon/msw-devtools-core';
+import { act, render, screen } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-import { render, screen, act } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { MswDevtoolsContext } from './provider';
 import { useMswDevtools } from './use-msw-devtools';
-import type { MswDevtoolsInstance } from '@juddroid_raccoon/msw-devtools-core';
 
 function makeFakeInstance(): MswDevtoolsInstance {
   const listeners = new Set<(s: any) => void>();
   let state: any = {
     enabledKeys: [],
-    presets: [], methodFilter: [], collapsedGroups: [], searchTerm: '', open: false,
+    presets: [],
+    methodFilter: [],
+    collapsedGroups: [],
+    searchTerm: '',
+    open: false,
   };
   return {
     mount: vi.fn(),
@@ -28,7 +32,10 @@ function makeFakeInstance(): MswDevtoolsInstance {
     setEnabled: vi.fn(),
     notifyUnhandledRequest: vi.fn(),
     on: vi.fn(() => () => {}),
-    subscribe: (l) => { listeners.add(l); return () => listeners.delete(l); },
+    subscribe: (l) => {
+      listeners.add(l);
+      return () => listeners.delete(l);
+    },
     version: '0.0.0-test',
   };
 }
@@ -52,7 +59,9 @@ describe('useMswDevtools', () => {
       </MswDevtoolsContext.Provider>,
     );
     expect(screen.getByTestId('enabled').textContent).toBe('');
-    act(() => { inst.toggle('GET::/a'); });
+    act(() => {
+      inst.toggle('GET::/a');
+    });
     expect(screen.getByTestId('enabled').textContent).toBe('GET::/a');
   });
 });

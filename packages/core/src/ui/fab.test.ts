@@ -1,7 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createFab } from './fab';
 
-beforeEach(() => { document.body.innerHTML = ''; });
+beforeEach(() => {
+  document.body.innerHTML = '';
+});
 
 describe('createFab', () => {
   it('renders a button with badge count', () => {

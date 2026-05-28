@@ -22,7 +22,9 @@ export function createFab({ root, onOpen }: FabOptions): Fab {
   badge.hidden = true;
   btn.appendChild(badge);
 
-  function onClick() { onOpen(); }
+  function onClick() {
+    onOpen();
+  }
   btn.addEventListener('click', onClick);
   root.appendChild(btn);
 

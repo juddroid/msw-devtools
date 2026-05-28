@@ -18,6 +18,10 @@ describe('inferGroup', () => {
   });
 
   it('falls back to "Other" when the override throws', () => {
-    expect(inferGroup('/x', 'GET', () => { throw new Error('boom'); })).toBe('Other');
+    expect(
+      inferGroup('/x', 'GET', () => {
+        throw new Error('boom');
+      }),
+    ).toBe('Other');
   });
 });

@@ -1,6 +1,6 @@
 import type { RequestHandler } from 'msw';
-import { inferGroup, type GroupBy } from './grouping';
-import { getMockKey, pathToMatcher, stripBaseUrl, type MockKey } from './matcher';
+import { type GroupBy, inferGroup } from './grouping';
+import { type MockKey, getMockKey, pathToMatcher, stripBaseUrl } from './matcher';
 
 export interface MockEntry {
   key: MockKey;
@@ -28,10 +28,7 @@ function readInfo(handler: RequestHandler): HandlerInfo | null {
   return info;
 }
 
-export function buildEntries(
-  handlers: RequestHandler[],
-  opts: BuildEntriesOptions,
-): MockEntry[] {
+export function buildEntries(handlers: RequestHandler[], opts: BuildEntriesOptions): MockEntry[] {
   const entries: MockEntry[] = [];
   for (const handler of handlers) {
     const info = readInfo(handler);

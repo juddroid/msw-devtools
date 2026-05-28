@@ -29,9 +29,9 @@ describe('stripBaseUrl', () => {
   });
 
   it('handles a trailing-slash baseUrl', () => {
-    expect(
-      stripBaseUrl('https://api.example.com/users', 'https://api.example.com/'),
-    ).toBe('/users');
+    expect(stripBaseUrl('https://api.example.com/users', 'https://api.example.com/')).toBe(
+      '/users',
+    );
   });
 
   it('returns "/" when rawPath equals base (after normalizing trailing slash)', () => {

@@ -1,18 +1,18 @@
 import type { RequestHandler } from 'msw';
 
-import { buildEntries, type MockEntry } from './handlers/registry';
-import type { MockKey } from './handlers/matcher';
 import { createEvents } from './events';
-import { createLogger, type LoggerOptions } from './logger';
-import { createPersistence, PERSIST_VERSION, type PersistedShape } from './persistence';
-import { createState, defaultState, type DevtoolsState, type StateStore } from './state';
-import { createUnhandledMatcher } from './unhandled';
-import { createWorkerSync, type Worker, type WorkerSync } from './worker';
+import type { MockKey } from './handlers/matcher';
+import { type MockEntry, buildEntries } from './handlers/registry';
+import { type LoggerOptions, createLogger } from './logger';
+import { PERSIST_VERSION, type PersistedShape, createPersistence } from './persistence';
 import { decodeShareParam, encodeShareParam } from './share';
-import { mountRoot, unmountRoot, type Position, type Theme } from './ui/render';
-import { createFab, type Fab } from './ui/fab';
-import { createToastHost, type ToastHost } from './ui/toast';
-import { createDrawer, type Drawer } from './ui/drawer';
+import { type DevtoolsState, type StateStore, createState, defaultState } from './state';
+import { type Drawer, createDrawer } from './ui/drawer';
+import { type Fab, createFab } from './ui/fab';
+import { type Position, type Theme, mountRoot, unmountRoot } from './ui/render';
+import { type ToastHost, createToastHost } from './ui/toast';
+import { createUnhandledMatcher } from './unhandled';
+import { type Worker, type WorkerSync, createWorkerSync } from './worker';
 
 import type { GroupBy } from './handlers/grouping';
 
@@ -179,8 +179,7 @@ export function createController(options: MswDevtoolsOptions): MswDevtoolsInstan
 
     const currentKeys = next.enabledKeys;
     const changed =
-      currentKeys.length !== prevEnabled.length ||
-      currentKeys.some((k, i) => prevEnabled[i] !== k);
+      currentKeys.length !== prevEnabled.length || currentKeys.some((k, i) => prevEnabled[i] !== k);
     if (changed) {
       prevEnabled = [...currentKeys];
       workerSync?.sync(activeHandlers());
@@ -258,23 +257,38 @@ export function createController(options: MswDevtoolsOptions): MswDevtoolsInstan
 
   function unmount() {
     if (!mounted) return;
-    drawer?.destroy(); drawer = null;
-    fab?.destroy(); fab = null;
-    toasts?.destroy(); toasts = null;
-    if (renderHandle) { unmountRoot(renderHandle); renderHandle = null; }
-    unsubState?.(); unsubState = null;
+    drawer?.destroy();
+    drawer = null;
+    fab?.destroy();
+    fab = null;
+    toasts?.destroy();
+    toasts = null;
+    if (renderHandle) {
+      unmountRoot(renderHandle);
+      renderHandle = null;
+    }
+    unsubState?.();
+    unsubState = null;
     mounted = false;
   }
 
   return {
-    async mount(container) { await mount(container); },
-    unmount() { unmount(); },
+    async mount(container) {
+      await mount(container);
+    },
+    unmount() {
+      unmount();
+    },
     async dispose() {
       if (disposed) return;
       disposed = true;
       if (persistTimer) clearTimeout(persistTimer);
       if (changeTimer) clearTimeout(changeTimer);
-      try { persistence.save(snapshotPersisted()); } catch { /* ignore */ }
+      try {
+        persistence.save(snapshotPersisted());
+      } catch {
+        /* ignore */
+      }
       unmount();
       await workerSync?.dispose();
       workerSync = null;
@@ -295,6 +309,8 @@ export function createController(options: MswDevtoolsOptions): MswDevtoolsInstan
     notifyUnhandledRequest,
     on: (event, listener) => events.on(event, listener),
     subscribe: (listener) => store.subscribe(listener),
-    get version() { return typeof __PKG_VERSION__ === 'string' ? __PKG_VERSION__ : '0.0.0'; },
+    get version() {
+      return typeof __PKG_VERSION__ === 'string' ? __PKG_VERSION__ : '0.0.0';
+    },
   };
 }

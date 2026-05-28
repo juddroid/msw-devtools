@@ -1,6 +1,6 @@
+import { useMswDevtools } from '@juddroid_raccoon/msw-devtools-react';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useMswDevtools } from '@juddroid_raccoon/msw-devtools-react';
 
 export function AxiosBridge() {
   const { notifyUnhandledRequest } = useMswDevtools();

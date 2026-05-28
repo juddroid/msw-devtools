@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { MswDevtools } from '@juddroid_raccoon/msw-devtools-react';
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from '@tanstack/react-query';
-import { handlers } from './handlers';
+import axios from 'axios';
 import { AxiosBridge } from './axios-bridge';
+import { handlers } from './handlers';
 
 const client = new QueryClient();
 

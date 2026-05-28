@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const [data, setData] = useState<unknown>(null);
   useEffect(() => {
-    void fetch('/api/posts').then((r) => r.json()).then(setData);
+    void fetch('/api/posts')
+      .then((r) => r.json())
+      .then(setData);
   }, []);
   return (
     <main style={{ padding: 24, fontFamily: 'system-ui' }}>

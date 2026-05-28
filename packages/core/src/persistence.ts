@@ -1,5 +1,5 @@
-import type { Logger } from './logger';
 import type { MockKey } from './handlers/matcher';
+import type { Logger } from './logger';
 import type { Preset } from './state';
 
 export const PERSIST_VERSION = 1 as const;
@@ -50,9 +50,10 @@ export function createPersistence(storageKey: string, logger: Logger): Persisten
     try {
       // Use Storage.prototype.setItem.call to allow test spies to intercept
       // even when the instance method has been cached by a Proxy wrapper.
-      (typeof Storage !== 'undefined'
-        ? Storage.prototype.setItem.bind(ls)
-        : ls.setItem.bind(ls))(key, value);
+      (typeof Storage !== 'undefined' ? Storage.prototype.setItem.bind(ls) : ls.setItem.bind(ls))(
+        key,
+        value,
+      );
     } catch (e) {
       if (!warned) {
         logger.warn('localStorage write failed; using in-memory fallback', e);
