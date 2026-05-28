@@ -26,7 +26,7 @@ export interface UseMswDevtoolsResult {
 }
 
 export function useMswDevtools(): UseMswDevtoolsResult {
-  const inst = useContext(MswDevtoolsContext);
+  const inst: MswDevtoolsInstance | null = useContext(MswDevtoolsContext);
   const state = useSyncExternalStore<DevtoolsState>(
     inst ? inst.subscribe : noopSubscribe,
     () => (inst ? inst.getState() : FALLBACK_STATE),
