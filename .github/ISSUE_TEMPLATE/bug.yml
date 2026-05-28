@@ -1,0 +1,42 @@
+name: Bug report
+description: Something is broken in @juddroid/msw-devtools-core or -react.
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Package version(s)
+      placeholder: '@juddroid/msw-devtools-react@0.1.0'
+    validations: { required: true }
+  - type: dropdown
+    id: bundler
+    attributes:
+      label: Build tool / bundler
+      options: [Vite, Webpack, Next.js (App Router), Next.js (Pages Router), Turbopack, Rollup, esbuild, Parcel, Other]
+    validations: { required: true }
+  - type: input
+    id: framework
+    attributes:
+      label: Framework version
+      placeholder: 'react 19.0.0 / next 15.1.4'
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: 'Chrome 131'
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Link to a Stackblitz/CodeSandbox or repository.
+    validations: { required: true }
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened?
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations: { required: true }
