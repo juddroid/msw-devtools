@@ -1,11 +1,11 @@
 'use client';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  createMswDevtools,
   type MockKey,
   type MswDevtoolsInstance,
   type MswDevtoolsOptions,
+  createMswDevtools,
 } from '@juddroid_raccoon/msw-devtools-core';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { MswDevtoolsContext } from './provider';
 
 export interface MswDevtoolsProps extends MswDevtoolsOptions {
@@ -22,6 +22,7 @@ export function MswDevtools(props: MswDevtoolsProps) {
   const optsRef = useRef(coreOpts);
   optsRef.current = coreOpts;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — options tracked via ref to avoid re-creating instance on every render
   useEffect(() => {
     if (!enabled) return;
     const inst = createMswDevtools(optsRef.current);
@@ -37,14 +38,9 @@ export function MswDevtools(props: MswDevtoolsProps) {
       setInstance(null);
     };
     // mount happens once per enabled-cycle; option deps tracked via ref intentionally
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled]);
 
   if (!enabled) return <>{children}</>;
 
-  return (
-    <MswDevtoolsContext.Provider value={instance}>
-      {children}
-    </MswDevtoolsContext.Provider>
-  );
+  return <MswDevtoolsContext.Provider value={instance}>{children}</MswDevtoolsContext.Provider>;
 }

@@ -16,8 +16,11 @@ export interface ToastHost {
 const DEFAULT_DURATION = 4000;
 const MAX_STACK = 3;
 
-function escape(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] ?? c));
+function escapeHtml(s: string): string {
+  return s.replace(
+    /[&<>"']/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] ?? c,
+  );
 }
 
 export function createToastHost(root: HTMLElement): ToastHost {
@@ -58,12 +61,12 @@ export function createToastHost(root: HTMLElement): ToastHost {
       el.className = 'msw-toast';
       el.setAttribute('data-id', input.id);
       el.innerHTML = `
-        <div class="msw-toast-title">${escape(input.title)}</div>
-        <div class="msw-toast-body">${escape(input.body)}</div>
-        ${input.desc ? `<div class="msw-toast-desc">${escape(input.desc)}</div>` : ''}
+        <div class="msw-toast-title">${escapeHtml(input.title)}</div>
+        <div class="msw-toast-body">${escapeHtml(input.body)}</div>
+        ${input.desc ? `<div class="msw-toast-desc">${escapeHtml(input.desc)}</div>` : ''}
         <div class="msw-toast-actions">
           <button class="msw-toast-btn-ghost" data-act="dismiss">Dismiss</button>
-          ${input.action ? `<button class="msw-toast-btn-primary" data-act="primary">${escape(input.action.label)}</button>` : ''}
+          ${input.action ? `<button class="msw-toast-btn-primary" data-act="primary">${escapeHtml(input.action.label)}</button>` : ''}
         </div>
       `;
       el.querySelector('[data-act="dismiss"]')?.addEventListener('click', () => dismiss(input.id));
