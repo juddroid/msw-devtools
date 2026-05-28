@@ -11,5 +11,4 @@ export type { Position, Theme } from './ui/render';
 export { getMockKey } from './handlers/matcher';
 
 declare const __PKG_VERSION__: string;
-export const version: string =
-  typeof __PKG_VERSION__ === 'string' ? __PKG_VERSION__ : '0.0.0';
+export const version: string = typeof __PKG_VERSION__ === 'string' ? __PKG_VERSION__ : '0.0.0';

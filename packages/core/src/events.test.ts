@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createEvents } from './events';
 
-type Map = { 'mock-change': [string[]]; 'reset': []; };
+type Map = { 'mock-change': [string[]]; reset: [] };
 
 describe('createEvents', () => {
   it('delivers events to subscribers', () => {
@@ -24,7 +24,9 @@ describe('createEvents', () => {
   it('isolates errors in one listener from the others', () => {
     const events = createEvents<Map>();
     const good = vi.fn();
-    events.on('reset', () => { throw new Error('bad listener'); });
+    events.on('reset', () => {
+      throw new Error('bad listener');
+    });
     events.on('reset', good);
     expect(() => events.emit('reset')).not.toThrow();
     expect(good).toHaveBeenCalled();

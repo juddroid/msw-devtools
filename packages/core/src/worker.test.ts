@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createWorkerSync, type Worker } from './worker';
 import { createLogger } from './logger';
+import { type Worker, createWorkerSync } from './worker';
 
 function fakeWorker(): Worker & { _used: unknown[]; _started: boolean; _stopped: boolean } {
   let used: unknown[] = [];
@@ -8,10 +8,20 @@ function fakeWorker(): Worker & { _used: unknown[]; _started: boolean; _stopped:
     _used: used,
     _started: false,
     _stopped: false,
-    async start() { (this as any)._started = true; },
-    stop() { (this as any)._stopped = true; },
-    resetHandlers() { used = []; (this as any)._used = used; },
-    use(...handlers: unknown[]) { used.push(...handlers); (this as any)._used = used; },
+    async start() {
+      (this as any)._started = true;
+    },
+    stop() {
+      (this as any)._stopped = true;
+    },
+    resetHandlers() {
+      used = [];
+      (this as any)._used = used;
+    },
+    use(...handlers: unknown[]) {
+      used.push(...handlers);
+      (this as any)._used = used;
+    },
   };
 }
 
@@ -34,7 +44,7 @@ describe('createWorkerSync', () => {
     const h1 = { id: 1 } as unknown;
     const h2 = { id: 2 } as unknown;
     sync.sync([h1, h2]);
-    sync.sync([h1]);          // overrides — only the last call should apply
+    sync.sync([h1]); // overrides — only the last call should apply
     expect(w._used).toEqual([]);
     vi.advanceTimersByTime(60);
     expect(w._used).toEqual([h1]);
@@ -51,7 +61,7 @@ describe('createWorkerSync', () => {
     await sync.dispose();
     vi.advanceTimersByTime(200);
     expect(w._stopped).toBe(true);
-    expect(w._used).toEqual([]);   // sync was canceled by dispose
+    expect(w._used).toEqual([]); // sync was canceled by dispose
     vi.useRealTimers();
   });
 });

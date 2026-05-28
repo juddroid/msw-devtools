@@ -1,7 +1,17 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-  "files": { "ignoreUnknown": true, "ignore": ["dist", "coverage", ".changeset"] },
+  "files": {
+    "ignoreUnknown": true,
+    "ignore": [
+      "dist",
+      "coverage",
+      ".changeset",
+      "**/public/mockServiceWorker.js",
+      "**/.next/**",
+      "examples/**/dist/**"
+    ]
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",

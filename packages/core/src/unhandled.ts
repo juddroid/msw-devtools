@@ -1,5 +1,5 @@
-import type { MockEntry } from './handlers/registry';
 import { stripBaseUrl } from './handlers/matcher';
+import type { MockEntry } from './handlers/registry';
 
 export interface UnhandledRequestInput {
   method: string;

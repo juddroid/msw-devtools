@@ -55,7 +55,11 @@ export function createState(initial: DevtoolsState = defaultState): StateStore {
   function set(next: DevtoolsState) {
     state = next;
     for (const l of [...listeners]) {
-      try { l(state); } catch { /* isolate */ }
+      try {
+        l(state);
+      } catch {
+        /* isolate */
+      }
     }
   }
   function update(reducer: (s: DevtoolsState) => DevtoolsState) {
@@ -70,41 +74,48 @@ export function createState(initial: DevtoolsState = defaultState): StateStore {
       return () => listeners.delete(listener);
     },
     setEnabledKeys: (keys) => update((s) => ({ ...s, enabledKeys: [...keys] })),
-    toggleKey: (key) => update((s) => ({
-      ...s,
-      enabledKeys: s.enabledKeys.includes(key)
-        ? s.enabledKeys.filter((k) => k !== key)
-        : [...s.enabledKeys, key],
-    })),
-    toggleMany: (keys, enabled) => update((s) => {
-      const next = new Set(s.enabledKeys);
-      for (const k of keys) enabled ? next.add(k) : next.delete(k);
-      return { ...s, enabledKeys: [...next] };
-    }),
+    toggleKey: (key) =>
+      update((s) => ({
+        ...s,
+        enabledKeys: s.enabledKeys.includes(key)
+          ? s.enabledKeys.filter((k) => k !== key)
+          : [...s.enabledKeys, key],
+      })),
+    toggleMany: (keys, enabled) =>
+      update((s) => {
+        const next = new Set(s.enabledKeys);
+        for (const k of keys) enabled ? next.add(k) : next.delete(k);
+        return { ...s, enabledKeys: [...next] };
+      }),
     clearAll: () => update((s) => ({ ...s, enabledKeys: [] })),
-    savePreset: (name) => update((s) => ({
-      ...s,
-      presets: [...s.presets.filter((p) => p.name !== name), { name, keys: [...s.enabledKeys] }],
-    })),
-    loadPreset: (name) => update((s) => {
-      const preset = s.presets.find((p) => p.name === name);
-      return preset ? { ...s, enabledKeys: [...preset.keys] } : s;
-    }),
-    deletePreset: (name) => update((s) => ({ ...s, presets: s.presets.filter((p) => p.name !== name) })),
+    savePreset: (name) =>
+      update((s) => ({
+        ...s,
+        presets: [...s.presets.filter((p) => p.name !== name), { name, keys: [...s.enabledKeys] }],
+      })),
+    loadPreset: (name) =>
+      update((s) => {
+        const preset = s.presets.find((p) => p.name === name);
+        return preset ? { ...s, enabledKeys: [...preset.keys] } : s;
+      }),
+    deletePreset: (name) =>
+      update((s) => ({ ...s, presets: s.presets.filter((p) => p.name !== name) })),
     setSearchTerm: (searchTerm) => update((s) => ({ ...s, searchTerm })),
-    toggleMethodFilter: (m) => update((s) => ({
-      ...s,
-      methodFilter: s.methodFilter.includes(m)
-        ? s.methodFilter.filter((x) => x !== m)
-        : [...s.methodFilter, m],
-    })),
+    toggleMethodFilter: (m) =>
+      update((s) => ({
+        ...s,
+        methodFilter: s.methodFilter.includes(m)
+          ? s.methodFilter.filter((x) => x !== m)
+          : [...s.methodFilter, m],
+      })),
     resetMethodFilter: () => update((s) => ({ ...s, methodFilter: [] })),
-    toggleGroup: (g) => update((s) => ({
-      ...s,
-      collapsedGroups: s.collapsedGroups.includes(g)
-        ? s.collapsedGroups.filter((x) => x !== g)
-        : [...s.collapsedGroups, g],
-    })),
+    toggleGroup: (g) =>
+      update((s) => ({
+        ...s,
+        collapsedGroups: s.collapsedGroups.includes(g)
+          ? s.collapsedGroups.filter((x) => x !== g)
+          : [...s.collapsedGroups, g],
+      })),
     collapseAllGroups: (groups) => update((s) => ({ ...s, collapsedGroups: [...groups] })),
     expandAllGroups: () => update((s) => ({ ...s, collapsedGroups: [] })),
     setOpen: (open) => update((s) => ({ ...s, open })),

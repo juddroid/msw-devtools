@@ -1,6 +1,10 @@
 'use client';
+import type {
+  DevtoolsState,
+  MockKey,
+  MswDevtoolsInstance,
+} from '@juddroid_raccoon/msw-devtools-core';
 import { useContext, useMemo, useSyncExternalStore } from 'react';
-import type { DevtoolsState, MockKey, MswDevtoolsInstance } from '@juddroid_raccoon/msw-devtools-core';
 import { MswDevtoolsContext } from './provider';
 
 const FALLBACK_STATE: DevtoolsState = {
@@ -33,13 +37,16 @@ export function useMswDevtools(): UseMswDevtoolsResult {
     () => FALLBACK_STATE,
   );
 
-  return useMemo<UseMswDevtoolsResult>(() => ({
-    enabledKeys: state.enabledKeys,
-    isEnabled: inst ? inst.isEnabled : (() => false),
-    enable: inst ? inst.enable : noop,
-    disable: inst ? inst.disable : noop,
-    toggle: inst ? inst.toggle : noop,
-    setEnabled: inst ? inst.setEnabled : noop,
-    notifyUnhandledRequest: inst ? inst.notifyUnhandledRequest : noop,
-  }), [inst, state]);
+  return useMemo<UseMswDevtoolsResult>(
+    () => ({
+      enabledKeys: state.enabledKeys,
+      isEnabled: inst ? inst.isEnabled : () => false,
+      enable: inst ? inst.enable : noop,
+      disable: inst ? inst.disable : noop,
+      toggle: inst ? inst.toggle : noop,
+      setEnabled: inst ? inst.setEnabled : noop,
+      notifyUnhandledRequest: inst ? inst.notifyUnhandledRequest : noop,
+    }),
+    [inst, state],
+  );
 }

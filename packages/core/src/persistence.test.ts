@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createPersistence, type PersistedShape } from './persistence';
 import { createLogger } from './logger';
+import { type PersistedShape, createPersistence } from './persistence';
 
 const STORAGE_KEY = 'msw-devtools-test';
 const silentLogger = createLogger({ logLevel: 'silent' });

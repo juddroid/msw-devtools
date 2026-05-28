@@ -1,5 +1,5 @@
+import { act, render, screen } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-import { render, act, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { MswDevtools } from './MswDevtools';
 
@@ -30,17 +30,21 @@ describe('<MswDevtools />', () => {
         <div data-testid="child">child</div>
       </MswDevtools>,
     );
-    await act(async () => { await new Promise((r) => setTimeout(r, 10)); });
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 10));
+    });
     expect(document.querySelector('[data-msw-devtools-root]')).not.toBeNull();
   });
 
   it('cleans up on unmount', async () => {
-    const { unmount } = render(
-      <MswDevtools handlers={[]} workerFactory={fakeWorkerFactory} />,
-    );
-    await act(async () => { await new Promise((r) => setTimeout(r, 10)); });
+    const { unmount } = render(<MswDevtools handlers={[]} workerFactory={fakeWorkerFactory} />);
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 10));
+    });
     unmount();
-    await act(async () => { await new Promise((r) => setTimeout(r, 10)); });
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 10));
+    });
     expect(document.querySelector('[data-msw-devtools-root]')).toBeNull();
   });
 });

@@ -4,17 +4,22 @@ import { buildEntries } from '../handlers/registry';
 import { createState } from '../state';
 import { createDrawer } from './drawer';
 
-beforeEach(() => { document.body.innerHTML = ''; });
+beforeEach(() => {
+  document.body.innerHTML = '';
+});
 
 function setup() {
   const root = document.createElement('div');
   document.body.appendChild(root);
   const state = createState();
-  const entries = buildEntries([
-    http.get('/users', () => HttpResponse.json([])),
-    http.post('/users', () => HttpResponse.json({})),
-    http.delete('/users/:id', () => HttpResponse.json({})),
-  ], {});
+  const entries = buildEntries(
+    [
+      http.get('/users', () => HttpResponse.json([])),
+      http.post('/users', () => HttpResponse.json({})),
+      http.delete('/users/:id', () => HttpResponse.json({})),
+    ],
+    {},
+  );
   const handlers = {
     onToggle: vi.fn(),
     onToggleMany: vi.fn(),

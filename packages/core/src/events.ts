@@ -22,7 +22,11 @@ export function createEvents<Events extends Record<string, unknown[]>>(): EventE
       const set = listeners.get(event);
       if (!set) return;
       for (const fn of [...set]) {
-        try { fn(...args); } catch { /* one bad listener shouldn't kill the rest */ }
+        try {
+          fn(...args);
+        } catch {
+          /* one bad listener shouldn't kill the rest */
+        }
       }
     },
     clear() {

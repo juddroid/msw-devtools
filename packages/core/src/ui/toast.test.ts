@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createToastHost } from './toast';
 
-beforeEach(() => { document.body.innerHTML = ''; vi.useFakeTimers(); });
+beforeEach(() => {
+  document.body.innerHTML = '';
+  vi.useFakeTimers();
+});
 
 describe('toast host', () => {
   it('shows a toast and auto-dismisses after the given duration', () => {
@@ -34,7 +37,10 @@ describe('toast host', () => {
     const host = createToastHost(root);
     const onAction = vi.fn();
     host.show({
-      id: 'a', title: 't', body: 'b', duration: 5000,
+      id: 'a',
+      title: 't',
+      body: 'b',
+      duration: 5000,
       action: { label: 'Go', onClick: onAction },
     });
     (root.querySelector('.msw-toast-btn-primary') as HTMLButtonElement).click();
