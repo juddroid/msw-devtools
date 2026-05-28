@@ -27,6 +27,21 @@ describe('stripBaseUrl', () => {
   it('returns the input unchanged when the base does not match', () => {
     expect(stripBaseUrl('/users', 'https://api.example.com')).toBe('/users');
   });
+
+  it('handles a trailing-slash baseUrl', () => {
+    expect(
+      stripBaseUrl('https://api.example.com/users', 'https://api.example.com/'),
+    ).toBe('/users');
+  });
+
+  it('returns "/" when rawPath equals base (after normalizing trailing slash)', () => {
+    expect(stripBaseUrl('https://api.example.com/', 'https://api.example.com')).toBe('/');
+    expect(stripBaseUrl('https://api.example.com', 'https://api.example.com/')).toBe('/');
+  });
+
+  it('passes the path through when prefixed differently', () => {
+    expect(stripBaseUrl('/users', 'https://api.example.com/')).toBe('/users');
+  });
 });
 
 describe('pathToMatcher', () => {
@@ -50,6 +65,11 @@ describe('pathToMatcher', () => {
 
   it('strips baseUrl before building regex', () => {
     const re = pathToMatcher('https://api.example.com/users/:id', 'https://api.example.com');
+    expect(re.test('/users/7')).toBe(true);
+  });
+
+  it('strips baseUrl that has a trailing slash before building regex', () => {
+    const re = pathToMatcher('https://api.example.com/users/:id', 'https://api.example.com/');
     expect(re.test('/users/7')).toBe(true);
   });
 

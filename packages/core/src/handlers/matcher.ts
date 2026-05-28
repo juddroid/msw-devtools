@@ -5,7 +5,12 @@ export function getMockKey(method: string | RegExp, path: string | RegExp): Mock
 }
 
 export function stripBaseUrl(rawPath: string, baseUrl?: string): string {
-  if (baseUrl && rawPath.startsWith(baseUrl)) return rawPath.slice(baseUrl.length);
+  if (!baseUrl) return rawPath;
+  const base = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  if (base && rawPath.startsWith(base)) {
+    const tail = rawPath.slice(base.length);
+    return tail || '/';
+  }
   return rawPath;
 }
 
