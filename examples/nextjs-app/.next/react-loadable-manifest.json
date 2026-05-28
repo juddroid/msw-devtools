@@ -1,0 +1,12 @@
+{
+  "../../node_modules/.pnpm/msw@2.14.6_@types+node@22.19.19_typescript@5.9.3/node_modules/msw/lib/core/utils/internal/parseGraphQLRequest.mjs -> graphql": {
+    "id": null,
+    "files": []
+  },
+  "../../packages/core/dist/index.mjs -> msw/browser": {
+    "id": 1384,
+    "files": [
+      "static/chunks/384.b30da37f6e915068.js"
+    ]
+  }
+}
