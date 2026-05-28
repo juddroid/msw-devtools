@@ -1,0 +1,25 @@
+{
+  "name": "@msw-devtools/example-vite-react",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@juddroid/msw-devtools-react": "workspace:*",
+    "@tanstack/react-query": "^5.62.11",
+    "axios": "^1.7.9",
+    "msw": "^2.7.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7"
+  }
+}
