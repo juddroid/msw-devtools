@@ -14,7 +14,6 @@
     "useDefineForClassFields": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
     "declaration": true,
     "declarationMap": true,

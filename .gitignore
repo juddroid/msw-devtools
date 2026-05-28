@@ -6,7 +6,8 @@ coverage/
 *.log
 .DS_Store
 .env
-.env.local
+.env.*
+!.env.example
 .changeset/*.md
 !.changeset/README.md
 !.changeset/config.json
