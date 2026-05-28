@@ -1,7 +1,7 @@
 {
-  "name": "@juddroid/msw-devtools-react",
+  "name": "@juddroid_raccoon/msw-devtools-react",
   "version": "0.0.0",
-  "description": "React adapter for @juddroid/msw-devtools-core. Provider + hook, SSR-safe, Next.js compatible.",
+  "description": "React adapter for @juddroid_raccoon/msw-devtools-core. Provider + hook, SSR-safe, Next.js compatible.",
   "type": "module",
   "sideEffects": false,
   "files": ["dist"],
@@ -24,12 +24,12 @@
     "size": "size-limit"
   },
   "peerDependencies": {
-    "@juddroid/msw-devtools-core": "workspace:*",
+    "@juddroid_raccoon/msw-devtools-core": "workspace:*",
     "msw": "^2",
     "react": "^18 || ^19"
   },
   "dependencies": {
-    "@juddroid/msw-devtools-core": "workspace:*"
+    "@juddroid_raccoon/msw-devtools-core": "workspace:*"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^11.1.6",

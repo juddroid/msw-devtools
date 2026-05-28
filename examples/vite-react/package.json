@@ -8,7 +8,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@juddroid/msw-devtools-react": "workspace:*",
+    "@juddroid_raccoon/msw-devtools-react": "workspace:*",
     "@tanstack/react-query": "^5.62.11",
     "axios": "^1.7.9",
     "msw": "^2.7.0",

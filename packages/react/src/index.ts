@@ -15,5 +15,5 @@ export type {
   GroupBy,
   Position,
   Theme,
-} from '@juddroid/msw-devtools-core';
+} from '@juddroid_raccoon/msw-devtools-core';
 export const version = '0.0.0';

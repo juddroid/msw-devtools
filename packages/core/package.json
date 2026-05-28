@@ -1,5 +1,5 @@
 {
-  "name": "@juddroid/msw-devtools-core",
+  "name": "@juddroid_raccoon/msw-devtools-core",
   "version": "0.0.0",
   "description": "Framework-agnostic visual devtools for toggling MSW handlers at runtime.",
   "type": "module",

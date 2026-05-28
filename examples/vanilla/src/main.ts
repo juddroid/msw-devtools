@@ -1,4 +1,4 @@
-import { createMswDevtools } from '@juddroid/msw-devtools-core';
+import { createMswDevtools } from '@juddroid_raccoon/msw-devtools-core';
 import { handlers } from './handlers';
 
 const devtools = createMswDevtools({

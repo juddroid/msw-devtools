@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [["@juddroid/msw-devtools-core", "@juddroid/msw-devtools-react"]],
+  "linked": [["@juddroid_raccoon/msw-devtools-core", "@juddroid_raccoon/msw-devtools-react"]],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
