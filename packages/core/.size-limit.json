@@ -1,0 +1,8 @@
+[
+  {
+    "path": "dist/index.mjs",
+    "limit": "25 KB",
+    "gzip": true,
+    "ignore": ["msw"]
+  }
+]
