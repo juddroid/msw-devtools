@@ -1,5 +1,5 @@
-import type { MockEntry } from '../handlers/registry';
 import type { MockKey } from '../handlers/matcher';
+import type { MockEntry } from '../handlers/registry';
 import type { StateStore } from '../state';
 import { icons } from './icons';
 
@@ -32,8 +32,11 @@ export interface Drawer {
 
 const METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] as const;
 
-function escape(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] ?? c));
+function escapeHtml(s: string): string {
+  return s.replace(
+    /[&<>"']/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] ?? c,
+  );
 }
 
 export function createDrawer({ root, state, entries, handlers }: DrawerOptions): Drawer {
@@ -92,13 +95,13 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
       </header>
 
       <section class="msw-toolbar">
-        <input class="msw-search" placeholder="Search path or method" value="${escape(s.searchTerm)}" data-act="search"/>
+        <input class="msw-search" placeholder="Search path or method" value="${escapeHtml(s.searchTerm)}" data-act="search"/>
         <div class="msw-method-row">
           ${METHODS.map((m) => {
             const active = s.methodFilter.includes(m);
             return `<span class="msw-method-chip ${active ? 'active' : ''}"
                           data-act="method" data-method="${m}"
-                          style="background:var(--msw-m-${m.toLowerCase()}-${active ? 'fg' : 'bg'});${active ? 'color:#fff;' : 'color:var(--msw-m-' + m.toLowerCase() + '-fg);'}">${m}</span>`;
+                          style="background:var(--msw-m-${m.toLowerCase()}-${active ? 'fg' : 'bg'});${active ? 'color:#fff;' : `color:var(--msw-m-${m.toLowerCase()}-fg);`}">${m}</span>`;
           }).join('')}
           ${s.methodFilter.length > 0 ? '<span class="msw-method-chip" data-act="method-reset" style="border:1px solid var(--msw-border);color:var(--msw-text-dim)">reset</span>' : ''}
         </div>
@@ -107,14 +110,14 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
       <section class="msw-preset-bar">
         <select class="msw-select" data-act="preset-select">
           <option value="">Preset…</option>
-          ${s.presets.map((p) => `<option value="${escape(p.name)}" ${p.name === selectedPreset ? 'selected' : ''}>${escape(p.name)} (${p.keys.length})</option>`).join('')}
+          ${s.presets.map((p) => `<option value="${escapeHtml(p.name)}" ${p.name === selectedPreset ? 'selected' : ''}>${escapeHtml(p.name)} (${p.keys.length})</option>`).join('')}
         </select>
         <button class="msw-icon-btn" data-act="save-preset" title="Save preset">${icons.save}</button>
         <button class="msw-icon-btn" data-act="delete-preset" title="Delete preset" ${selectedPreset ? '' : 'disabled'}>${icons.trash}</button>
       </section>
 
       <section class="msw-preset-input-row">
-        <input class="msw-input-sm" placeholder="Save current as preset" value="${escape(presetInputValue)}" data-act="preset-input"/>
+        <input class="msw-input-sm" placeholder="Save current as preset" value="${escapeHtml(presetInputValue)}" data-act="preset-input"/>
         <button class="msw-icon-btn" data-act="share" title="Copy share URL">${icons.link}</button>
         <button class="msw-icon-btn" data-act="clear" title="Disable all" ${s.enabledKeys.length === 0 ? 'disabled' : ''}>${icons.reset}</button>
       </section>
@@ -134,35 +137,45 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
       </section>
 
       <div class="msw-list">
-        ${groups.length === 0
-          ? '<div style="padding:40px 16px;text-align:center;color:var(--msw-text-dim);font-size:12px;">No matching handlers.</div>'
-          : groups.map(([group, items]) => {
-              const collapsed = s.collapsedGroups.includes(group);
-              const groupEnabled = items.filter((i) => enabledSet.has(i.key)).length;
-              const groupAll = groupEnabled === items.length;
-              const groupSome = groupEnabled > 0 && !groupAll;
-              return `
+        ${
+          groups.length === 0
+            ? '<div style="padding:40px 16px;text-align:center;color:var(--msw-text-dim);font-size:12px;">No matching handlers.</div>'
+            : groups
+                .map(([group, items]) => {
+                  const collapsed = s.collapsedGroups.includes(group);
+                  const groupEnabled = items.filter((i) => enabledSet.has(i.key)).length;
+                  const groupAll = groupEnabled === items.length;
+                  const groupSome = groupEnabled > 0 && !groupAll;
+                  return `
                 <div class="msw-group">
-                  <div class="msw-group-header" data-act="toggle-group" data-group="${escape(group)}">
+                  <div class="msw-group-header" data-act="toggle-group" data-group="${escapeHtml(group)}">
                     <span class="msw-chevron ${collapsed ? 'collapsed' : ''}">${icons.chevronDown}</span>
-                    <span class="msw-group-name">${escape(group)}</span>
+                    <span class="msw-group-name">${escapeHtml(group)}</span>
                     <span class="msw-group-count ${groupEnabled > 0 ? 'active' : ''}">${groupEnabled}/${items.length}</span>
                     <span class="msw-checkbox ${groupAll ? 'checked' : groupSome ? 'indeterminate' : ''}"
-                          data-act="toggle-group-all" data-group="${escape(group)}">${groupAll ? icons.check : ''}</span>
+                          data-act="toggle-group-all" data-group="${escapeHtml(group)}">${groupAll ? icons.check : ''}</span>
                   </div>
-                  ${collapsed ? '' : items.map((it) => {
-                    const checked = enabledSet.has(it.key);
-                    return `
-                      <div class="msw-row ${checked ? 'active' : ''}" data-act="toggle-row" data-key="${escape(it.key)}">
+                  ${
+                    collapsed
+                      ? ''
+                      : items
+                          .map((it) => {
+                            const checked = enabledSet.has(it.key);
+                            return `
+                      <div class="msw-row ${checked ? 'active' : ''}" data-act="toggle-row" data-key="${escapeHtml(it.key)}">
                         <span class="msw-checkbox ${checked ? 'checked' : ''}">${checked ? icons.check : ''}</span>
                         <span class="msw-method-badge" style="background:var(--msw-m-${it.method.toLowerCase()}-bg);color:var(--msw-m-${it.method.toLowerCase()}-fg);">${it.method}</span>
-                        <span class="msw-path" title="${escape(it.displayPath)}">${escape(it.displayPath)}</span>
+                        <span class="msw-path" title="${escapeHtml(it.displayPath)}">${escapeHtml(it.displayPath)}</span>
                       </div>
                     `;
-                  }).join('')}
+                          })
+                          .join('')
+                  }
                 </div>
               `;
-            }).join('')}
+                })
+                .join('')
+        }
       </div>
     `;
 
@@ -171,7 +184,10 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
   }
 
   function wire() {
-    el.querySelector('[data-act="close"]')?.addEventListener('click', () => { state.setOpen(false); handlers.onClose(); });
+    el.querySelector('[data-act="close"]')?.addEventListener('click', () => {
+      state.setOpen(false);
+      handlers.onClose();
+    });
 
     const search = el.querySelector('[data-act="search"]') as HTMLInputElement | null;
     if (search) {
@@ -189,9 +205,13 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
     }
 
     for (const chip of el.querySelectorAll('[data-act="method"]')) {
-      chip.addEventListener('click', () => state.toggleMethodFilter((chip as HTMLElement).dataset.method ?? ''));
+      chip.addEventListener('click', () =>
+        state.toggleMethodFilter((chip as HTMLElement).dataset.method ?? ''),
+      );
     }
-    el.querySelector('[data-act="method-reset"]')?.addEventListener('click', () => state.resetMethodFilter());
+    el.querySelector('[data-act="method-reset"]')?.addEventListener('click', () =>
+      state.resetMethodFilter(),
+    );
 
     const presetSelect = el.querySelector('[data-act="preset-select"]') as HTMLSelectElement | null;
     if (presetSelect) {
@@ -216,11 +236,17 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
 
     const presetInput = el.querySelector('[data-act="preset-input"]') as HTMLInputElement | null;
     if (presetInput) {
-      presetInput.addEventListener('input', (e) => { presetInputValue = (e.target as HTMLInputElement).value; });
+      presetInput.addEventListener('input', (e) => {
+        presetInputValue = (e.target as HTMLInputElement).value;
+      });
       presetInput.addEventListener('keydown', (e) => {
         if ((e as KeyboardEvent).key === 'Enter') {
           const name = presetInputValue.trim();
-          if (name) { handlers.onSavePreset(name); presetInputValue = ''; selectedPreset = name; }
+          if (name) {
+            handlers.onSavePreset(name);
+            presetInputValue = '';
+            selectedPreset = name;
+          }
         }
       });
     }
@@ -229,11 +255,26 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
     el.querySelector('[data-act="clear"]')?.addEventListener('click', () => handlers.onClearAll());
 
     el.querySelector('[data-act="toggle-visible"]')?.addEventListener('click', () => {
-      const enabled = !(el.querySelector('[data-act="toggle-visible"]') as HTMLElement).classList.contains('checked');
-      handlers.onToggleMany(visibleEntries().map((e) => e.key), enabled);
+      const enabled = !(
+        el.querySelector('[data-act="toggle-visible"]') as HTMLElement
+      ).classList.contains('checked');
+      handlers.onToggleMany(
+        visibleEntries().map((e) => e.key),
+        enabled,
+      );
     });
-    el.querySelector('[data-act="all-on"]')?.addEventListener('click', () => handlers.onToggleMany(visibleEntries().map((e) => e.key), true));
-    el.querySelector('[data-act="all-off"]')?.addEventListener('click', () => handlers.onToggleMany(visibleEntries().map((e) => e.key), false));
+    el.querySelector('[data-act="all-on"]')?.addEventListener('click', () =>
+      handlers.onToggleMany(
+        visibleEntries().map((e) => e.key),
+        true,
+      ),
+    );
+    el.querySelector('[data-act="all-off"]')?.addEventListener('click', () =>
+      handlers.onToggleMany(
+        visibleEntries().map((e) => e.key),
+        false,
+      ),
+    );
     el.querySelector('[data-act="toggle-collapse-all"]')?.addEventListener('click', () => {
       const names = groupedEntries().map(([n]) => n);
       const s = state.get();
@@ -255,11 +296,16 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
         const items = entries.filter((en) => en.group === group);
         const enabledSet = new Set(state.get().enabledKeys);
         const enabled = items.some((i) => !enabledSet.has(i.key));
-        handlers.onToggleMany(items.map((i) => i.key), enabled);
+        handlers.onToggleMany(
+          items.map((i) => i.key),
+          enabled,
+        );
       });
     }
     for (const row of el.querySelectorAll('[data-act="toggle-row"]')) {
-      row.addEventListener('click', () => handlers.onToggle((row as HTMLElement).dataset.key ?? ''));
+      row.addEventListener('click', () =>
+        handlers.onToggle((row as HTMLElement).dataset.key ?? ''),
+      );
     }
   }
 
@@ -267,8 +313,12 @@ export function createDrawer({ root, state, entries, handlers }: DrawerOptions):
 
   return {
     el,
-    open() { state.setOpen(true); },
-    close() { state.setOpen(false); },
+    open() {
+      state.setOpen(true);
+    },
+    close() {
+      state.setOpen(false);
+    },
     isOpen: () => state.get().open,
     render,
     destroy() {
