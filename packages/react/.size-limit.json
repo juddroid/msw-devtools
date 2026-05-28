@@ -1,0 +1,8 @@
+[
+  {
+    "path": "dist/index.mjs",
+    "limit": "4 KB",
+    "gzip": true,
+    "ignore": ["msw", "@juddroid/msw-devtools-core", "react", "react-dom"]
+  }
+]
