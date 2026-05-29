@@ -1,6 +1,6 @@
 {
   "name": "@juddroid_raccoon/msw-devtools-react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "React adapter for @juddroid_raccoon/msw-devtools-core. Provider + hook, SSR-safe, Next.js compatible.",
   "type": "module",
   "sideEffects": false,
