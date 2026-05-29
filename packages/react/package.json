@@ -1,10 +1,12 @@
 {
   "name": "@juddroid_raccoon/msw-devtools-react",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "React adapter for @juddroid_raccoon/msw-devtools-core. Provider + hook, SSR-safe, Next.js compatible.",
   "type": "module",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -46,7 +48,13 @@
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   },
-  "keywords": ["msw", "mock", "devtools", "react", "mock-service-worker"],
+  "keywords": [
+    "msw",
+    "mock",
+    "devtools",
+    "react",
+    "mock-service-worker"
+  ],
   "license": "MIT",
   "author": "Dongcheol Jeong <dcjeong@bubbletap.com>",
   "homepage": "https://github.com/juddroid/msw-devtools#readme",
@@ -56,5 +64,8 @@
     "url": "git+https://github.com/juddroid/msw-devtools.git",
     "directory": "packages/react"
   },
-  "publishConfig": { "access": "public", "provenance": true }
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }
