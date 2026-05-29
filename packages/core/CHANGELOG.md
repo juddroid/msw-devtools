@@ -1,5 +1,11 @@
 # @juddroid_raccoon/msw-devtools-core
 
+## 0.1.1
+
+### Patch Changes
+
+- Add package README so it shows up on the npm page.
+
 ## 0.1.0
 
 ### Minor Changes
